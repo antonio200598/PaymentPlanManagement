@@ -8,7 +8,7 @@ public class PaymentPlan
 
     public Client Client { get; private set; } = null!;
 
-    public int? CostCenterId { get; private set; }
+    public long? CostCenterId { get; private set; }
 
     public CostCenter? CostCenter { get; private set; }
 
@@ -24,7 +24,7 @@ public class PaymentPlan
 
     protected PaymentPlan() { }
 
-    public PaymentPlan(long clientId, int? costCenterId, string? costCenterEnum)
+    public PaymentPlan(long clientId, long? costCenterId, string? costCenterEnum)
     {
       ClientId = clientId;
       CostCenterId = costCenterId;

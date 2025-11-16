@@ -1,3 +1,3 @@
 namespace PaymentPlanManagement_API.Application.DTOs;
 
-public record CreateResponsavelRequest(string Name);
+public record CreateClientRequest(string Name);
