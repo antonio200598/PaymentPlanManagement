@@ -26,12 +26,12 @@ public class PlansController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create(CreatePlanRequest request)
     {
-        var client = await _clientRepo.GetByIdAsync(request.ClientId);
+        var client = await _clientRepo.GetByIdAsync(request.Client_Id);
 
         if (client == null)
             return BadRequest("Responsável não encontrado");
         
-        var plan = new PaymentPlan(request.ClientId, request.CostCenterId, request.CostCenterEnum);
+        var plan = new PaymentPlan(request.Client_Id, request.CostsCentral_Id, request.CostsCentral_enum);
         
         foreach (var chargeDto in request.Charges)
         {

@@ -6,7 +6,7 @@ public class Client
 
     public string Name { get; private set; } = null!;
 
-    public ICollection<PaymentPlan> Plans { get; private set; } = new List<PlanoPagamento>();
+    public ICollection<PaymentPlan> PaymentPlans { get; private set; } = new List<PaymentPlan>();
 
     protected Client() { }
 

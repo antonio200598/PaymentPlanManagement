@@ -8,7 +8,7 @@ public record ChargeInput(
     PaymentMethod PaymentMethod);
 
 public record CreatePlanRequest(
-    long ClientId,
-    long? CostCenterId,
-    string? CostCenterEnum,
+    long Client_Id,
+    long? CostsCentral_Id,
+    string? CostsCentral_enum,
     List<ChargeInput> Charges);

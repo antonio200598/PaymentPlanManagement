@@ -20,7 +20,7 @@ public class PaymentPlanRepository : IPaymentPlanRepository
 
     public async Task<IEnumerable<PaymentPlan>> GetByClientAsync(long id)
     {
-        return await _context.PaymentPlans.Where(p => p.ClientId == id).Include(p => p.Charges).ToListAsync();
+        return await _context.PaymentPlans.Where(p => p.Client_Id == id).Include(p => p.Charges).ToListAsync();
     }
 
     public Task SaveChangesAsync() => _context.SaveChangesAsync();

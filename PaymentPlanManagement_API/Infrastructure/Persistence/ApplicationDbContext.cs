@@ -8,13 +8,13 @@ public class ApplicationDbContext : DbContext
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options){}
 
-    public DbSet<Client> Clients => Set<Client>();
+    public DbSet<Client> Client => Set<Client>();
 
     public DbSet<PaymentPlan> PaymentPlans => Set<PaymentPlan>();
 
-    public DbSet<Charge> Charges => Set<Charge>();
+    public DbSet<Charge> Charge => Set<Charge>();
 
-    public DbSet<CostCenter> CostCenters => Set<CostCenter>();
+    public DbSet<CostsCentral> CostsCenter => Set<CostsCentral>();
 
     protected override void OnModelCreating(ModelBuilder b)
     {

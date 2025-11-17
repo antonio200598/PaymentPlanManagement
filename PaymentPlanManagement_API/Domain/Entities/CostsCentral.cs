@@ -1,6 +1,6 @@
 namespace PaymentPlanManagement_API.Domain.Entities;
 
-public class CostCenter
+public class CostsCentral
 {
     public int Id { get; private set; }
 
@@ -8,9 +8,9 @@ public class CostCenter
 
     public string? Code { get; private set; }
 
-    protected CostCenter() { }
+    protected CostsCentral() { }
 
-    public CostCenter(string name, string? code)
+    public CostsCentral(string name, string? code)
     {
         Name = name;
         Code = code;

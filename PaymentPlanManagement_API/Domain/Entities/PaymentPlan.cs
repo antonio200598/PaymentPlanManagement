@@ -4,15 +4,15 @@ public class PaymentPlan
 {
     public long Id { get; private set; }
 
-    public long ClientId { get; private set; }
+    public long Client_Id { get; private set; }
 
     public Client Client { get; private set; } = null!;
 
-    public long? CostCenterId { get; private set; }
+    public long? CostsCentral_Id { get; private set; }
 
-    public CostCenter? CostCenter { get; private set; }
+    public CostsCentral? CostsCentral { get; private set; }
 
-    public string? CostCenterEnum { get; private set; }
+    public string? CostsCentral_enum { get; private set; }
 
     public ICollection<Charge> Charges { get; private set; } = new List<Charge>();
 
@@ -24,10 +24,10 @@ public class PaymentPlan
 
     protected PaymentPlan() { }
 
-    public PaymentPlan(long clientId, long? costCenterId, string? costCenterEnum)
+    public PaymentPlan(long client_Id, long? costsCentral_Id, string? costsCentral_Enum)
     {
-      ClientId = clientId;
-      CostCenterId = costCenterId;
-      CostCenterEnum = costCenterEnum;
+        Client_Id = client_Id;
+        CostsCentral_Id = costsCentral_Id;
+        CostsCentral_enum = costsCentral_Enum;
     }
 }

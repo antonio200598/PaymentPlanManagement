@@ -11,25 +11,25 @@ public class ChargeRepository : IChargeRepository
 
     public ChargeRepository(ApplicationDbContext context) => _context = context;
 
-    public async Task AddAsync(Charge c) => await _context.Charges.AddAsync(c);
+    public async Task AddAsync(Charge c) => await _context.Charge.AddAsync(c);
 
     public async Task<Charge?> GetByIdAsync(long id)
     {
-        return await _context.Charges.FirstOrDefaultAsync(c => c.Id == id);
+        return await _context.Charge.FirstOrDefaultAsync(c => c.Id == id);
     }
 
     public async Task<IEnumerable<Charge>> GetByClientAsync(long id)
     {
-        return await _context.Charges
+        return await _context.Charge
             .Include(c => c.PaymentPlan)
-            .Where(c => c.PaymentPlan.ClientId == id)
+            .Where(c => c.PaymentPlan.Client_Id == id)
             .ToListAsync();
     }
 
     public async Task<int> CountByClientAsync(long clientId)
     {
-        return await _context.Charges
-            .CountAsync(c => c.PaymentPlan.ClientId == clientId);
+        return await _context.Charge
+            .CountAsync(c => c.PaymentPlan.Client_Id == clientId);
     }
 
     public Task SaveChangesAsync() => _context.SaveChangesAsync();

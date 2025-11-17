@@ -13,7 +13,7 @@ public class ClientsController : ControllerBase
     public ClientsController(IClientRepository repo) => _repo = repo;
 
     [HttpPost]
-    public async Task<IActionResult> CreateClient(CreateClientRequest client)
+    public async Task<IActionResult> CreateClient([FromBody] CreateClientRequest client)
     {
         var clientEntity = new Client(client.Name);
         

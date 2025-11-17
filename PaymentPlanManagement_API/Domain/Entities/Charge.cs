@@ -7,17 +7,17 @@ public class Charge
 {
     public long Id { get; private set; }
 
-    public long PaymentPlanId { get; private set; }
+    public long PaymentPlans_Id { get; private set; }
 
     public PaymentPlan PaymentPlan { get; private set; } = null!;
 
-    public decimal Value{ get; private set; }
+    public decimal Value { get; private set; }
 
     public DateTime DueDate { get; private set; }
 
     public PaymentMethod PaymentMethod { get; private set; }
 
-    public ChargeStatus ChargeStatus { get; private set; }
+    public ChargeStatus Status { get; private set; }
 
     public string PaymentCode { get; private set; } = null!;
 
@@ -35,14 +35,21 @@ public class Charge
 
     private static string GenerateCode(PaymentMethod paymentMethod)
     {
-        return paymentMethod == PaymentMethod.Boleto
-            ? $"836{Guid.NewGuid():N}".Substring(0, 47)
-            : $"PIX-{Guid.NewGuid():N}";
+        try
+        {
+            return paymentMethod == PaymentMethod.Boleto
+                ? $"836{Guid.NewGuid():N}".PadRight(47, '0').Substring(0, 47)
+                : $"PIX-{Guid.NewGuid():N}";
+        }
+        catch
+        {
+            throw;
+        }
     }
 
     public bool IsDue()
     {
-        return ChargeStatus == ChargeStatus.Created && DateTime.UtcNow.Date > DueDate.Date;
+        return Status == ChargeStatus.Created && DateTime.UtcNow.Date > DueDate.Date;
     }
 
     public void RegisterPayment(decimal value, DateTime date)
@@ -50,14 +57,14 @@ public class Charge
         if(Value < value)
           throw new Exception("Pagamento parcial não permitido.");
 
-        ChargeStatus = ChargeStatus.Paid;
+        Status = ChargeStatus.Paid;
     }
 
     public void CancelPayment()
     {
-        if(ChargeStatus == ChargeStatus.Paid)
+        if(Status == ChargeStatus.Paid)
           throw new Exception("Não é possível cancelar uma cobrança paga.");
 
-        ChargeStatus = ChargeStatus.Canceled;
+        Status = ChargeStatus.Canceled;
     }
 }

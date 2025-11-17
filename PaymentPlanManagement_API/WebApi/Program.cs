@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using PaymentPlanManagement_API.Domain.Interfaces;
 using PaymentPlanManagement_API.Infrastructure.Persistence;
+using PaymentPlanManagement_API.Infrastructure.Repositories;
 
 namespace PaymentPlanManagement_API.WebApi;
 
@@ -20,6 +22,10 @@ public class Program
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        builder.Services.AddScoped<IChargeRepository, ChargeRepository>();
+        builder.Services.AddScoped<IPaymentPlanRepository, PaymentPlanRepository>();
+        builder.Services.AddScoped<IClientRepository, ClientRepository>();
+
 
         var app = builder.Build();
 
