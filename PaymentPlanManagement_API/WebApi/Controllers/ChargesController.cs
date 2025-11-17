@@ -35,6 +35,21 @@ public class ChargesController : ControllerBase
         
         await _repo.SaveChangesAsync();
         
-        return Ok(charge);
+        return Ok("Cobrança Paga");
+    }
+
+    [HttpPost("{id}/pagamentos/cancelamento")]
+    public async Task<IActionResult> CancelarCobrança(long id)
+    {
+        var charge = await _repo.GetByIdAsync(id);
+
+        if (charge == null)
+          return NotFound();
+
+        charge.CancelPayment();
+
+        await _repo.SaveChangesAsync();
+
+        return Ok("Cobrança Cancelada");
     }
 }

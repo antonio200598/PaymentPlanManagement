@@ -20,22 +20,6 @@ public class Program
         else
           builder.Services.AddDbContext<ApplicationDbContext>(o => o.UseNpgsql(connectionString));
 
-        //using (var scope = builder.Services.BuildServiceProvider().CreateScope())
-        //{
-        //  var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        //  var model = context.Model;
-
-        //  foreach (var entityType in model.GetEntityTypes())
-        //  {
-        //    Console.WriteLine($"Entidade: {entityType.DisplayName()}");
-
-        //    foreach (var property in entityType.GetProperties())
-        //    {
-        //      Console.WriteLine($"  {property.Name} -> coluna: {property.GetColumnName()}");
-        //    }
-        //  }
-        //}
-
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();

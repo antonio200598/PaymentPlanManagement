@@ -57,6 +57,12 @@ public class Charge
         if(Value < value)
           throw new Exception("Pagamento parcial não permitido.");
 
+        if (Status == ChargeStatus.Canceled)
+          throw new Exception("Não é possível realizar o pagamento de uma cobrança cancelada");
+
+        if (Status == ChargeStatus.Paid)
+          throw new Exception("Esta Cobrança já foi paga");
+
         Status = ChargeStatus.Paid;
     }
 
@@ -64,6 +70,9 @@ public class Charge
     {
         if(Status == ChargeStatus.Paid)
           throw new Exception("Não é possível cancelar uma cobrança paga.");
+
+        if(Status == ChargeStatus.Canceled)
+          throw new Exception("Esta cobrança já está cancelada.");
 
         Status = ChargeStatus.Canceled;
     }
