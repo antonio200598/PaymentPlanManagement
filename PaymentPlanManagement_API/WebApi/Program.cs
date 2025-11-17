@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using PaymentPlanManagement_API.Domain.Interfaces;
 using PaymentPlanManagement_API.Infrastructure.Persistence;
 using PaymentPlanManagement_API.Infrastructure.Repositories;
+using System;
 
 namespace PaymentPlanManagement_API.WebApi;
 
@@ -18,6 +19,22 @@ public class Program
           builder.Services.AddDbContext<ApplicationDbContext>(o => o.UseSqlServer(connectionString));
         else
           builder.Services.AddDbContext<ApplicationDbContext>(o => o.UseNpgsql(connectionString));
+
+        using (var scope = builder.Services.BuildServiceProvider().CreateScope())
+        {
+          var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+          var model = context.Model;
+
+          foreach (var entityType in model.GetEntityTypes())
+          {
+            Console.WriteLine($"Entidade: {entityType.DisplayName()}");
+
+            foreach (var property in entityType.GetProperties())
+            {
+              Console.WriteLine($"  {property.Name} -> coluna: {property.GetColumnName()}");
+            }
+          }
+        }
 
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();

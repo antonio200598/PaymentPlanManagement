@@ -2,7 +2,7 @@ namespace PaymentPlanManagement_API.Domain.Entities;
 
 public class CostsCentral
 {
-    public int Id { get; private set; }
+    public long Id { get; private set; }
 
     public string Name { get; private set; } = null!;
 

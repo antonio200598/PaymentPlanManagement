@@ -21,7 +21,7 @@ public class Charge
 
     public string PaymentCode { get; private set; } = null!;
 
-    public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
+    public DateTime created_at { get; private set; } = DateTime.UtcNow;
 
     protected Charge() { }
 

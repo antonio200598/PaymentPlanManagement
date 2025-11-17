@@ -16,7 +16,7 @@ public class PaymentPlan
 
     public ICollection<Charge> Charges { get; private set; } = new List<Charge>();
 
-    public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
+    public DateTime created_at { get; private set; } = DateTime.UtcNow;
 
 
     public decimal TotalValue => Charges.Sum(c => c.Value);

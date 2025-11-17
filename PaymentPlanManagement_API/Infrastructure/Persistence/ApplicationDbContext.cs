@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PaymentPlanManagement_API.Domain.Entities;
+using PaymentPlanManagement_API.Infrastructure.Persistence.Configurations;
 
 namespace PaymentPlanManagement_API.Infrastructure.Persistence;
 
@@ -25,5 +26,11 @@ public class ApplicationDbContext : DbContext
         b.Entity<Charge>()
         .HasIndex(c => c.PaymentCode)
         .IsUnique();
+
+        b.ApplyConfiguration(new PaymentPlanConfiguration());
+        b.ApplyConfiguration(new ChargeConfiguration());
+        b.ApplyConfiguration(new ClientConfiguration());
+
+        base.OnModelCreating(b);
     }
 }
