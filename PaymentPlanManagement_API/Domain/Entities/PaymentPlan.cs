@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace PaymentPlanManagement_API.Domain.Entities;
 
 public class PaymentPlan
@@ -6,14 +8,17 @@ public class PaymentPlan
 
     public long Client_Id { get; private set; }
 
+    [JsonIgnore]
     public Client Client { get; private set; } = null!;
 
     public long? CostsCentral_Id { get; private set; }
 
+    [JsonIgnore]
     public CostsCentral? CostsCentral { get; private set; }
 
     public string? CostsCentral_enum { get; private set; }
 
+    [JsonIgnore]
     public ICollection<Charge> Charges { get; private set; } = new List<Charge>();
 
     public DateTime created_at { get; private set; } = DateTime.UtcNow;

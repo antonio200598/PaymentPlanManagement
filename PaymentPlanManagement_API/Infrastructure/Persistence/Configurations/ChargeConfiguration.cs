@@ -8,7 +8,7 @@ public class ChargeConfiguration : IEntityTypeConfiguration<Charge>
 {
     public void Configure(EntityTypeBuilder<Charge> builder)
     {
-        builder.ToTable("Charges");
+        builder.ToTable("Charge");
 
         builder.HasKey(c => c.Id);
 

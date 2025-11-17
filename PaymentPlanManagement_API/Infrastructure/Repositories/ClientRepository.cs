@@ -15,15 +15,8 @@ public class ClientRepository : IClientRepository
 
     public async Task<Client?> GetByIdAsync(long id)
     {
-        try
-        {
           return await _context.Client
               .FirstOrDefaultAsync(c => c.Id == id);
-        }
-        catch (Exception ex) 
-        { 
-            throw ex;
-        }
     }
 
     public async Task<IEnumerable<Client>> ListAsync() =>  await _context.Client.ToListAsync();

@@ -15,7 +15,7 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<Charge> Charge => Set<Charge>();
 
-    public DbSet<CostsCentral> CostsCenter => Set<CostsCentral>();
+    public DbSet<CostsCentral> CostsCentral => Set<CostsCentral>();
 
     protected override void OnModelCreating(ModelBuilder b)
     {
@@ -30,6 +30,7 @@ public class ApplicationDbContext : DbContext
         b.ApplyConfiguration(new PaymentPlanConfiguration());
         b.ApplyConfiguration(new ChargeConfiguration());
         b.ApplyConfiguration(new ClientConfiguration());
+        b.ApplyConfiguration(new CostsCentralConfiguration());
 
         base.OnModelCreating(b);
     }

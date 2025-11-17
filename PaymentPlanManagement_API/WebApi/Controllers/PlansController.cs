@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using PaymentPlanManagement_API.Application.DTOs;
 using PaymentPlanManagement_API.Domain.Entities;
 using PaymentPlanManagement_API.Domain.Interfaces;
+using System;
+using System.Runtime.InteropServices;
 
 namespace PaymentPlanManagement_API.WebApi.Controllers;
 
@@ -12,16 +14,21 @@ public class PlansController : ControllerBase
     private readonly IPaymentPlanRepository _paymentPlanRepo;
     private readonly IClientRepository _clientRepo;
     private readonly IChargeRepository _chargeRepo;
+    private readonly ICostsCentralRepository _costsCentralRepo;
 
-    public PlansController(
+  public PlansController
+  (
         IPaymentPlanRepository paymentPlanRepo,
         IClientRepository clientRepo,
-        IChargeRepository chargeRepo)
-    {
+        IChargeRepository chargeRepo,
+        ICostsCentralRepository costsCentralRepo
+  )
+  {
         _paymentPlanRepo = paymentPlanRepo;
         _clientRepo = clientRepo;
         _chargeRepo = chargeRepo;
-    }
+        _costsCentralRepo = costsCentralRepo;
+  }
 
     [HttpPost]
     public async Task<IActionResult> Create(CreatePlanRequest request)
@@ -30,8 +37,19 @@ public class PlansController : ControllerBase
 
         if (client == null)
             return BadRequest("Responsável não encontrado");
+
+        CostsCentral costsCentral = await _costsCentralRepo.GetByIdAsync(request.CostsCentral_Id.Value);
         
-        var plan = new PaymentPlan(request.Client_Id, request.CostsCentral_Id, request.CostsCentral_enum);
+        if(costsCentral == null) 
+        { 
+            costsCentral = new CostsCentral(request.CostsCentral_enum, new Random().Next(99).ToString() );
+        
+            await _costsCentralRepo.AddAsync(costsCentral);
+
+            await _costsCentralRepo.SaveChangesAsync();
+        }
+
+        var plan = new PaymentPlan(request.Client_Id, costsCentral.Id, costsCentral.Name);
         
         foreach (var chargeDto in request.Charges)
         {
@@ -47,8 +65,9 @@ public class PlansController : ControllerBase
 
         await _paymentPlanRepo.AddAsync(plan);
         
+        await _chargeRepo.SaveChangesAsync();
         await _paymentPlanRepo.SaveChangesAsync();
-        
+
         return Created($"/api/planos-de-pagamento/{plan.Id}", plan);
     }
 
