@@ -47,15 +47,19 @@ public class Charge
         }
     }
 
-    public bool IsDue()
-    {
-        return Status == ChargeStatus.Created && DateTime.UtcNow.Date > DueDate.Date;
-    }
-
     public void RegisterPayment(decimal value, DateTime date)
     {
-        if(Value < value)
+        if (date > DateTime.UtcNow.Date)
+          throw new Exception("A data de pagamento não pode ser futura.");
+
+        if (date.Date > DueDate.Date)
+          throw new Exception("Não é permitido o pagamento após a data de vencimento.");
+
+        if (Value < value)
           throw new Exception("Pagamento parcial não permitido.");
+
+        if (Value > value)
+          throw new Exception("Não é permitido o pagamento maior que o valor da cobrança.");
 
         if (Status == ChargeStatus.Canceled)
           throw new Exception("Não é possível realizar o pagamento de uma cobrança cancelada");
